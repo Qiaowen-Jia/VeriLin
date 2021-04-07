@@ -1,0 +1,17 @@
+## for test
+
+ObjectName = OpLinkedList
+FileSuffix = java;
+FileType = PREDefined;
+#this line
+SpecFlag = true
+SpecFileName = list_int
+
+MethodList: {remove, contains, add};
+MethodFreq:{20, 20, 20}
+
+DualRelation: {add, remove}
+DualRelation: {remove, add};
+DualRelation: {contains, contains}
+SetBound add.item : (1, 5);
+

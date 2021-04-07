@@ -1,0 +1,63 @@
+
+	@Override
+	public int compareTo(Object o){
+	  TraceLine tl1 = this;
+	  TraceLine tl2 = (TraceLine) o;
+	  if(tl1.posttime - tl2.posttime > 0 )
+		return 1;
+	  else if(tl1.posttime - tl2.posttime == 0)
+		return 0;
+	  else
+		return -1;
+	};
+  }
+
+  public static class Region{
+	final static int SCALE = 100000;
+	long start;
+	long end;
+	List<TraceLine> regionMember;
+	int start_line;
+	int end_line;
+
+	public Region(){
+	  this.regionMember = new ArrayList<>();
+	}
+
+	public void init_region(int index, TraceLine line){
+	  this.start = line.pretime;
+	  this.end = line.posttime;
+	  this.regionMember.add(line);
+	  this.start_line = index;
+	  this.end_line = index;
+	}
+
+	public boolean insert(int index, TraceLine line){
+	  if(line.pretime > this.end || line.posttime < this.start)
+		return false;
+	  regionMember.add(line);
+	  this.end_line = end_line >= index?end_line:index;
+	  this.start_line = start_line <=index?start_line:index;
+	  this.start = line.pretime >= start?start:line.pretime;
+	  this.end = line.posttime >= end?line.posttime:end;
+	  return true;
+	}
+
+	public List<List<Integer>> topo_sort(){
+	  Graph graph = new Graph(regionMember.size());
+	  for(int i = 0; i < regionMember.size(); i++)
+		for(int j = 0; j < regionMember.size(); j++)
+		  if(regionMember.get(i).posttime < regionMember.get(j).pretime)
+			graph.addEdge(i, j);
+	  List<List<Integer>> toporesult = graph.allTopologicalSorts();
+	  return toporesult;
+	}
+
+	public boolean union(Region rg){
+	  if(rg.start > end || rg.start < start)
+		return false;
+	  regionMember.addAll(rg.regionMember);
+	  return true;
+	}
+  }
+

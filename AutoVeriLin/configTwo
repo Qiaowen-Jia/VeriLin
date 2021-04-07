@@ -1,0 +1,14 @@
+## test for TwoLockQueue
+
+ObjectName = TwoLockCASQueue
+FileSuffix = java;
+FileType = preDefined;
+
+SpecFlag = true;
+SpecFileName = queue_int
+MethodList: {enq, deq}
+MethodFreq: {30, 30};
+
+DualRelation: {enq, deq}
+DualRelation: {deq, enq}
+SetBound enq.value: {1, 5}

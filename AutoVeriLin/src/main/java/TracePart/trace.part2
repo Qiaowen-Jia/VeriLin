@@ -1,0 +1,9 @@
+
+  public static void main(String[] args) throws InterruptedException{
+	if(args.length != 2){
+	  System.out.println("Error: The argument number is not two");
+	  return;
+	}
+	final int threadnum = Integer.valueOf(args[0]);
+	final int testnum = Integer.valueOf(args[1]);
+	Thread[] threads = new Thread[threadnum];

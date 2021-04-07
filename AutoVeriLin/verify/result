@@ -1,0 +1,134 @@
+test0:
+Verification Finished. 247ms
+test number = 1, false number = 
+test0+1:
+Verification Finished. 268ms
+test number = 1, false number = 
+test0+1+1:
+Verification Finished. 275ms
+test number = 1, false number = 
+test0+1+1+1:
+Verification Failed. 373ms
+test number = 1, false number = 
+test0+1+1+1+1:
+Verification Finished. 253ms
+test number = 1, false number = 
+test0+1+1+1+1+1:
+Verification Finished. 269ms
+test number = 1, false number = 
+test0+1+1+1+1+1+1:
+Verification Finished. 244ms
+test number = 1, false number = 
+test0+1+1+1+1+1+1+1:
+Verification Failed. 369ms
+test number = 1, false number = 
+test0+1+1+1+1+1+1+1+1:
+Verification Finished. 268ms
+test number = 1, false number = 
+test0:
+Verification Finished. 274ms
+test number = 1, false number = 
+test0+1:
+Verification Finished. 253ms
+test number = 1, false number = 
+test0+1+1:
+Verification Finished. 247ms
+test number = 1, false number = 
+test0:
+Verification Finished. 264ms
+test number = 1, false number = 0+1
+test0+1:
+Error in backTrack. Error in backTrack. Verification Failed. 343ms
+test number = 1, false number = 0+1+1
+test0+1+1:
+Verification Finished. 274ms
+test number = 1, false number = 0+1+1+1
+test0:
+test0+1:
+test0+1+1:
+test0:
+test0+1:
+test0+1+1:
+test0+1+1+1:
+test0+1+1+1+1:
+test0+1+1+1+1+1:
+test0:
+test0+1:
+test0+1+1:
+test0:
+test0:
+test0:
+test0:
+test0:
+test0:
+test[0+1]:
+test[[0+1]+1]:
+test0:
+test[0+1]:
+test[[0+1]+1]:
+test[[[0+1]+1]+1]:
+test[[[[0+1]+1]+1]+1]:
+test0:
+test[0+1]:
+test[[0+1]+1]:
+test[[[0+1]+1]+1]:
+test[[[[0+1]+1]+1]+1]:
+test[[[[[0+1]+1]+1]+1]+1]:
+test[[[[[[0+1]+1]+1]+1]+1]+1]:
+test[[[[[[[0+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test0:
+test[0+1]:
+test[[0+1]+1]:
+test[[[0+1]+1]+1]:
+test[[[[0+1]+1]+1]+1]:
+test[[[[[0+1]+1]+1]+1]+1]:
+test0:
+test[0+1]:
+test[[0+1]+1]:
+test[[[0+1]+1]+1]:
+test[[[[0+1]+1]+1]+1]:
+test[[[[[0+1]+1]+1]+1]+1]:
+test[[[[[[0+1]+1]+1]+1]+1]+1]:
+test[[[[[[[0+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]:
+test[[[[[[[[[0+1]+1]+1]+1]+1]+1]+1]+1]+1]:
+test0:
+test$[0+1]:
+test$[$[0+1]+1]:
+test$[$[$[0+1]+1]+1]:
+test$[$[$[$[0+1]+1]+1]+1]:
+test0:
+test0:
+test0:
+test0:
+test0:
+test0:
+test0:
+test:
+test1:
+test:
+test1:
+test0:
+test:
+test:
+test0:
+test0:
+test0:
+test0:
+test1:
+test2:
+test3:
+test4:
+test5:
+test0:
+test number = 1, false number = 1
