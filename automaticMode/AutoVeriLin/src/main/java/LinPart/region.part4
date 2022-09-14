@@ -1,0 +1,42 @@
+
+  @SuppressWarnings("unchecked")
+  public static void main(String[] args) throws InterruptedException{
+	//The arguments given is traceFileName, writeFileName, threadnum
+	if(args.length != 3){
+	  System.out.println("The argument of VeriRegion is incorrect.");
+	  System.out.println("VeriRegion should be given as java VeriRegion *readTraceFile*, *writeTraceFile*, *threadnum*");
+	  return;
+	}
+	String readfilename = args[0];
+	String writefilename = args[1];
+//	int threadnum = Integer.valueOf(args[2]);
+//	List<List<Integer>> topo_list;
+	List<Region> regionlist = new ArrayList<Region>();
+	long startMs = System.currentTimeMillis();
+	readTraceFile(readfilename);
+
+//	filter_modify(trace1, trace_modify1, trace_search1);
+	tlComparator_1 com1 = new tlComparator_1();
+//	tlComparator_2 com2 = new tlComparator_2();
+//	Colletctions.sort(trace_modify1, com1);
+//	Collections.sort(trace_search1, com2);
+//	writetraceF(trace_modify1, "trace_modify_sort");
+//	writetraceF(trace_search1, "trace_search_sort");
+
+	Collections.sort(trace, com1);
+	for(int i = 0; i < trace.size(); i++){
+	  insert2(regionlist, i);
+	}
+//	writetraceF(trace_modify1, "trace_modify_sort");
+	boolean[] post_try = new boolean[regionlist.size()];
+	List<List<List<Integer>>> whole_topo_list = new ArrayList<List<List<Integer>>>();
+	if(forward_search(regionlist, 0))
+	  System.out.println("Verification Finished.");
+	else{
+	  System.out.println("Verification Failed.");
+	  writeTraceFile(writefilename);
+	}
+	long endMs = System.currentTimeMillis();
+	System.out.println(ms2DHMS(startMs, endMs));
+  }
+}

@@ -1,0 +1,22 @@
+## test for TwoLockQueue
+
+ObjectName = list
+FileSuffix = java;
+FileType = selfdefined;
+
+SpecFlag = true;
+SpecFileName = list_int
+MethodList: {insert, delete, contains}
+SearchMethods:{insert, delete}
+ModifyMethods:{contains}
+MethodFreq: {30, 30, 50};
+
+SpecRelation: {insert, add}
+SpecRelation:{delete, remove}
+ReversibleRelation: {add, remove}
+ReversibleRelation: {remove, add}
+ReversibleRelation: {contains, contains}
+SetBound insert.item: {1, 100}
+SetBound delete.item: {1, 100}
+SetBound contains.item: {1, 100}
+

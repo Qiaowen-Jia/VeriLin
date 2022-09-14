@@ -1,0 +1,158 @@
+
+  public static void insert(List<Region> regionlist, int index){
+	if((regionlist.size() == 0) || regionlist.get(regionlist.size() - 1).end < trace.get(index).pretime){
+	  Region region = new Region();
+	  region.init_region(index, trace.get(index));
+	  regionlist.add(region);
+	}
+	else
+	  regionlist.get(regionlist.size() - 1).insert(index, trace.get(index));
+  }
+  public static void insert2(List<Region> regionlist, int index){
+	  if((regionlist.size() == 0) || regionlist.get(regionlist.size() - 1).end < trace.get(index).pretime){
+		Region region = new Region();
+		region.init_region(index, trace.get(index));
+		regionlist.add(region);
+	  }
+	  else{
+		for(int i = regionlist.size() - 1; i >=0; i--){
+		  if(regionlist.get(i).end < trace.get(index).pretime){
+			if(i == regionlist.size() - 2)
+			  break;
+			for(int j = i + 2; j < regionlist.size(); j++){
+			  regionlist.get(i+1).union(regionlist.get(j));
+			}
+			for(int j = regionlist.size() - 1; j >= i + 2 ; j--){
+			  regionlist.remove(j);
+			}
+			
+			break;
+		  }
+		  if(i == 0 && regionlist.get(0).end > trace.get(index).pretime){
+			for(int j = 1; j < regionlist.size(); j++){
+			  regionlist.get(0).union(regionlist.get(j));
+			}
+			for(int j = regionlist.size() - 1; j >= 1 ; j--){
+			  regionlist.remove(j);
+			}			
+		  }
+		}
+		regionlist.get(regionlist.size() - 1).insert(index, trace.get(index));
+	  }
+
+	}
+
+
+
+
+
+  public static boolean readTraceFile(String filename){
+	try{
+	  Scanner scanner = new Scanner(new File(filename));
+	  while(scanner.hasNextLine()){
+		if(!parseline(scanner.nextLine())){
+		  scanner.close();
+		  return false;
+		}
+	  }
+	  scanner.close();
+	}catch(FileNotFoundException e){
+	  System.out.println(e);
+	}
+	return true;
+  }
+
+  public static void writeTraceFile(String filename){
+	try{
+	  System.setOut(new PrintStream(new FileOutputStream(filename)));
+	  System.out.println("Error in Verification. Result_Info: ");
+//	  writeinfo();
+	  for(int i = 0; i < trace.size(); i++)
+		writeline(i);
+	  System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+	}catch(FileNotFoundException e){
+	  System.out.println(e);
+	}
+  }
+
+  public static String ms2DHMS(long startMs, long endMs){
+	String retval = null;
+	long secondCount = (endMs - startMs) / 1000;
+	String ms = (endMs - startMs) % 1000 + "ms";
+	long days = secondCount / (60 * 60 *24);
+	long hours = (secondCount % (60*60*24)) / (60 * 60);
+	long minutes = (secondCount % (60 * 60)) / 60;
+	long seconds = secondCount % 60;
+	if(days > 0)
+	  retval = days + "d" + hours + "h" + minutes + "m" + seconds + "s";
+	else if(hours > 0)
+	  retval = hours + "h" + minutes + "m" + seconds + "s";
+	else if(minutes > 0)
+	  retval = minutes + "m" + seconds + "s";
+	else if(seconds > 0)
+	  retval = seconds + "s";
+	else
+	  return ms;
+	return retval + ms;
+  }
+
+  public static void changeRegion(Region region, List<Integer> tl){
+	TraceLine[] tmpline = new TraceLine[region.regionMember.size()];
+	for(int i = 0; i < region.regionMember.size(); i++){
+	  tmpline[i] = region.regionMember.get(tl.get(i));
+	  trace.set(i+region.start_line, tmpline[i]);
+	}
+  }
+
+  public static void restoreRegion(Region region){
+	for(int i = 0; i < region.regionMember.size(); i++){
+	  trace.set(i+region.start_line, region.regionMember.get(i));
+	}
+  }
+
+  public static int forward_check(int start_line, int end_line){
+	for(int i = start_line; i <= end_line; i++)
+	  if(checkline(i) == false)
+		return i;
+	return -1;
+  }
+
+  public static boolean backtrack(int err_line, int start_line){
+	for(int i = err_line - 1; i >= start_line; i--){
+	  if(backline(i) == false){
+		System.out.println("Error in backTrack " + i);
+		return false;
+	  }
+	}
+	return true;
+  }
+
+  public static boolean region_forward_check(int start_line, int end_line){
+	int err_line = forward_check(start_line, end_line);
+	if(err_line == -1)
+	  return true;
+	backtrack(err_line, start_line);
+	return false;
+  }
+
+  public static boolean forward_search(List<Region> regionlist, int index){
+	if(index == regionlist.size())
+	  return true;
+	Region cur_region = regionlist.get(index);
+	List<List<Integer>> topo_list = cur_region.topo_sort();
+	List<Integer> topo_line;
+	for(int i = 0; i < topo_list.size(); i++){
+	  topo_line = topo_list.get(i);
+	  changeRegion(cur_region, topo_line);
+	  if(!region_forward_check(cur_region.start_line, cur_region.end_line)){
+		restoreRegion(cur_region);
+		continue;
+	  }
+	  boolean ret = forward_search(regionlist, index+1);
+	  if(ret == true)
+		return true;
+	  restoreRegion(cur_region);
+	}
+	return false;
+  }
+

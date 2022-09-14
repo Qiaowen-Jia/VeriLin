@@ -1,0 +1,98 @@
+
+  }
+  public static class tlComparator_1 implements Comparator<TraceLine>{
+	@Override
+	public int compare(TraceLine tl1, TraceLine tl2){
+	  if(tl1.posttime - tl2.posttime > 0)
+		return 1;
+	  else if(tl1.posttime - tl2.posttime == 0)
+		return 0;
+	  else
+		return -1;
+	};
+  }
+  public static class tlComparator_2 implements Comparator<TraceLine>{
+	@Override
+	public int compare(TraceLine tl1, TraceLine tl2){
+	  if(tl1.pretime - tl2.pretime > 0)
+		return 1;
+	  else if(tl1.pretime - tl2.pretime == 0)
+		return 0;
+	  else
+		return -1;
+	};
+  }
+
+  public static class Region{
+	final static int SCALE = 100000;
+	long start;
+	long end;
+	List<TraceLine> regionMember;
+	int start_line;
+	int end_line;
+
+	public Region(){
+	  this.regionMember = new ArrayList<>();
+	}
+
+	public void init_region(int index, TraceLine line){
+	  this.start = line.pretime;
+	  this.end = line.posttime;
+	  this.regionMember.add(line);
+	  this.start_line = index;
+	  this.end_line = index;
+	}
+	
+	public boolean contains(long pretime, long posttime){
+	  if(pretime > end || posttime < start)
+		return false;
+	  else
+		return true;
+	}
+
+	public boolean insert(int index, TraceLine line){
+	  if(!contains(line.pretime, line.posttime))
+		return false;
+
+	  regionMember.add(line);
+	  
+	  if(end_line < index)
+		end_line = index;
+	  else if(start_line > index)
+		start_line = index;
+
+	  if(line.pretime < start)
+		start = line.pretime;
+	  if(line.posttime > end)
+		end = line.posttime;
+	  return true;
+	}
+
+	public List<List<Integer>> topo_sort(){
+	  Graph graph = new Graph(regionMember.size());
+	  for(int i = 0; i < regionMember.size(); i++)
+		for(int j = 0; j < regionMember.size(); j++)
+		  if(regionMember.get(i).posttime < regionMember.get(j).pretime)
+			graph.addEdge(i, j);
+	  List<List<Integer>> toporesult = graph.allTopologicalSorts();
+	  return toporesult;
+	}
+
+	public boolean union(Region rg){
+	  if(rg.start_line < start_line)
+		start_line = rg.start_line;
+	  else if(rg.end_line > end_line)
+		end_line = rg.end_line;
+
+	  if(rg.start < start){
+		start = rg.start;
+	  }
+	  else if(rg.end > end){
+		end = rg.end;
+	  }
+	  regionMember.addAll(rg.regionMember);
+	  return true; 
+
+	}
+  }
+

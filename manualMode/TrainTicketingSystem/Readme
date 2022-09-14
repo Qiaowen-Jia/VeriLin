@@ -1,0 +1,15 @@
+#Evaluation for Table 1.
+cd TrainTicketingSystem
+#execute run1.sh for counting ratio of invoke time VS. response Time.
+sh run1.sh
+#execute showres1.sh to show the temporal result of run1.sh. When Completed reach 103, then the full test of run1.sh is finished
+sh showres1.sh
+#Evaluation for Table2.
+cd TrainTicketingSystem
+#execute run2.sh for buggy implementations
+sh run2.sh
+#execute showres2.sh to show the temporal result of run2.sh. When Complete reach 103, then the full test of run2.sh is finished
+#run1.sh and run2.sh are testing diffrent scale parallelly. It need huge cpu cores and memorys, especially for run2.sh. You can execute work1.sh or work2.sh for single scale. For example, if you want to examine the scale of repteat 100 times, 4 threads, 250 operations per thread, and Delay 1ms.
+cd TrainTicketingSystem
+sh work2.sh 100 4 250 1
+sh dispres2.sh 100 4 250 1

@@ -1,0 +1,10 @@
+#Evaluation for Table 3.
+cd MultiCoreOS
+#execute run3.sh for multicore OS.
+sh run3.sh
+#execute showres3.sh to show the temporal result of run3.sh. When Completed reach 100, then the full test of run3.sh is finished
+sh showres3.sh
+#run3.sh is testing diffrent scale parallelly. It need huge cpu cores and memorys. You can execute work3.sh for single scale. For example, if you want to examine the scale of repteat 100 times, 4 threads, 250 operations per thread, and Delay 1ms.
+cd MultiCoreOS
+sh work3.sh 100 4 250 1
+sh dispres3.sh 100 4 250 1
