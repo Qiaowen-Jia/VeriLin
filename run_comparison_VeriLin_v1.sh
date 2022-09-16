@@ -4,5 +4,5 @@
 sudo chmod -R 777 toolComparison
 cd toolComparison/VeriLin
 sh runAll_v1.sh
-cat result > ../../result_Figure5_VeriLin
+cat result > ../../result_Figure4_VeriLin
 cd ../..

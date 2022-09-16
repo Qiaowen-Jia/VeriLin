@@ -3,6 +3,6 @@
 
 sudo chmod -R 777 toolComparison
 cd toolComparison/VeriLin
-sh runAll.sh
+sh runAll_v2.sh
 cat result > ../../result_Figure4_VeriLin
 cd ../..

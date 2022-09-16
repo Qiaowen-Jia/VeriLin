@@ -9,19 +9,23 @@ The all-in-one package for this artifact is available at https://lcs.ios.ac.cn/~
 
 ### Notes
 
-- The experiments reported in the submitted paper are conducted on an Ubuntu 16.04 machine with 96 cores and 2048G memory. The Java SE 11 is suitable for most experiments while Java SE 14 is used in tools comparison.
-- We recommend to run these experiments with at least 8 cores and about 512G memory. With less resources, the results may differ from those reported in the submitted paper. 
+- The experiments reported in the submitted paper are conducted on an Ubuntu 18.04 machine with 96 cores and 2048G memory. Java SE 11 is used for all these experiments except the tools comparison part, which uses Java SE 14. 
+- We recommend to run these experiments with at least 16 cores and about 256G memory. With less resources, the results may differ from those reported in the submitted paper. 
 - For all these experiments, concurrent histories are to be generated in a random manner. Thus, the experimental results may vary from time to time. We report the average statistics to reduce possible bias in the following experiments and in the submitted paper. However, we envisage that more tests may demonstrate the performance of our and others' approaches more accurately.
-- JVM may report warnings during the executions of some experiments, e.g. "warning: Unsafe is internal proprietary API and may be removed in a future release". These warnings concern only about the concurrent objects under test, instead of the implementation of VeriLin.
+- Warnings may be reported during executing an experiment, e.g. "warning: Unsafe is internal proprietary API and may be removed in a future release". These warnings concern only about the concurrent object under test, instead of the implementation of VeriLin.
+- The evaluations of Sections 2 and 3 are fully included in this GitHub repository, and do not require the external dependencies. The evaluation of section 1 require docker and other dependencies.
 
 ## 1. Comparing VeriLin with the other 3 tools (TFL, lincheck and VeriTrace)
 In this artifact, VeriLin, TFL and lincheck can be run directly, but VeriTrace is hard-coded and dependent on the specifically configured JPF. We use a docker to establish the run-time environment for VeriTrace. The results of this section correspond to those reported in Figure 4 of the submitted paper.
 
-Before running the experiment of Figure 4, please download non_docker_env.tgz (size 1.8G) and toolComparison.tgz (size 1.3G) for the above dependencies and executable files. Decompress these two files in the root(VeriLin) directory.
-
+Before running the experiment of Figure 4, please download non_docker_env.tgz (is available at https://drive.google.com/file/d/1Mx8iWjmfNFBcrCt5YRjeLUchzX0Y7P8G/view?usp=sharing, size 1.8G)  and toolComparison.tgz (is available at https://drive.google.com/file/d/11-Go5kw8dKfrmhMrIDDytqEGknfSAUjm/view?usp=sharing, size 1.3G) for the above dependencies and executable files. Decompress these two files in the root directory ***VeriLin***.
+```bash
+    tar -xvzf non_docker_env.tgz
+    tar -xvzf toolComparison.tgz
+```
 ### 1.1 VeriLin
 
-The result is shown in ***result_Figure4_VeriLin***, in the form shown below
+The result is shown in ***result_Figure4_VeriLin*** by running run_comprison_VeriLin_v1.sh, in the format below.
 
 ```
 tool	Object	Size	#Solved
@@ -42,20 +46,23 @@ VeriLin	concurrentdeque	4 * 10000	10/10
 VeriLin	concurrentdeque	4 * 1000	10/10
 ```
 
-This experiment can be executed with either of the following two settings:
-
-***short: repeated for 10 times per object***
+This experiment can be executed with either of the following three settings:
+***once: only 1 time per object***
 ```bash
     sudo sh run_comparison_VeriLin.sh
 ```
-***complete: repeated for 100 times per object***
+***short: repeated for 10 times per object***
 ```bash
     sudo sh run_comprison_VeriLin_v1.sh
+```
+***complete: repeated for 100 times per object***
+```bash
+    sudo sh run_comprison_VeriLin_v2.sh
 ```
 
 ### 1.2 TFL, lincheck and VeriTrace
 
-The result is shown in ***result_Figure4_Others***, in the form shown below.
+The result is shown in ***result_Figure4_Others*** by running run_comparison_Others.sh, in the format below.
 
 ```
 ,method,case,size,pass
@@ -106,9 +113,10 @@ This experiment can be executed with either of the following three settings:
     sudo sh run_comparison_Others_v2.sh
 ```
 
+
 ## 2. Manual mode of VeriLin with the two large-scale case studies
 
-The results of this section correspond to those reported in Table 1, Table 2 and Table 3 in the submitted paper.
+The results of this section correspond to those reported in Table 1, Table 2 and Table 3 in the submitted paper.   
 
 ### 2.1 Ticketing System
 
@@ -116,12 +124,11 @@ The results of this section correspond to those reported in Table 1, Table 2 and
 
 For this experiment only, run
 ```bash
-    sh run_table1.sh
+    ./run_table1.sh
 ```
-The intermediate result can be shown in ***result_Table1***, while show_table1.sh is executed repeatedly,
-as in the form shown below.
+An intermediate result is saved in ***result_Table1***, and can be shown in the format below by running
 ```bash
-    sh show_table1.sh
+    ./show_table1.sh
 ```
 
 ```
@@ -134,31 +141,30 @@ Completed: 103 ; Ratio: 7 17 68 4 7 ; Timeout: 215 178 142
 Scale 100 4 2000 0
 Completed: 103 ; Ratio: 8 15 68 9 3 ; Timeout: 207 181 138 
 ```
-The above is the final result ***run_table1.sh*** finishes where the complete number of all scales reach to 103. To repeat a single experiment for x times with n threads, m operations per thread, delay t milliseconds, run
+The above is also the final result when ***run_table1.sh*** finishes with the above 4 scales (running in parallel)，which could be very time- and space-consuming. "Completed: 103" means all the 103 implementations are tested under the given scale. To repeat a single scale experiment for x times with n threads, m operations per thread, delay t milliseconds, run
 ```bash
-    sh run_table1_single.sh x n m t
+    ./run_table1_single.sh x n m t
 ```
-The (intermediate) result can be shown while show_table1_single.sh is executed repeatedly.
+An intermediate result can be shown with ***show_table1_single.sh***.
 ```bash
-    sh show_table1_single.sh x n m t
+    ./show_table1_single.sh x n m t
 ```
 
-For example, a single experiment of size 4*250, delay 1ms, repeat for 100 times, run
+For example, to repeat a single experiment of size 4*125, delay 0ms, for 100 times, run
 ```bash
-    sh run_table1_single.sh 100 4 250 1
-    sh show_table1_single.sh 100 4 250 1
+    ./run_table1_single.sh 100 4 125 0
+    ./show_table1_single.sh 100 4 125 0
 ```
 #### 2.1.2 waiting time and linearizability checking
 
 For this experiment only, run
 ```bash
-    sudo sh run_table2.sh
+    ./run_table2.sh
 ```
 
-The intermediate result can be shown in ***result_Table2***, while show_table2.sh is executed repeatedly,
-as in the form shown below.
+An intermediate result is saved in ***result_Table2***, and can be shown in the following format by running
 ```bash
-    sh show_table2.sh
+    ./show_table2.sh
 ```
 
 ```
@@ -186,26 +192,25 @@ Scale 100 4 2000 1
 Completed: 103 ; Non-lin: 2085 ; Buggy Imp: 35 ; Time: 5h39m13s
 Scale 100 4 2000 10
 Completed: 103 ; Non-lin: 2137 ; Buggy Imp: 27 ; Time: 4h58m22s
-
 ```
 
-The above is the final result ***run_table2.sh*** finishes, , where the complete number of all scales reach to 103. "Non-lin" = #Non-linearizable Histories, "Buggy Imp" = #Buggy Implementations. To repeat a single experiment for x times with n threads, m operations per thread, delay t milliseconds, run
+The above is also the final result when ***run_table2.sh*** finishes with the above 12 scales. "Non-lin" = #Non-linearizable Histories, "Buggy Imp" = #Buggy Implementations. To repeat a single scale experiment for x times with n threads, m operations per thread, delay t milliseconds, run
 ```bash
-    sh run_table2_single.sh x n m t
+    ./run_table2_single.sh x n m t
 ```
-The (intermediate) result can be shown while show_table2_single.sh is executed repeatedly.
+An intermediate result can be shown with ***show_table2_single.sh***.
 ```bash
-    sh show_table2_single.sh x n m t
+    ./show_table2_single.sh x n m t
 ```
 
 ### 2.2 Multicore OS module
 
 For this experiment only, run
 ```bash
-    sudo sh run_table3.sh
+    ./run_table3.sh
 ```
 
-The result is shown in ***result_Table3***, in the form shown below. 
+Please note that the jar packages of the Multicore OS module do not work correctly under Java SE 8. The result is shown in ***result_Table3***, in the following format. 
 
 ```
 Scale 100 4 125 0
@@ -234,13 +239,13 @@ Scale 100 4 1000 10
 Completed: 100 ; RegionNum: 1529 ; MaxRegion: 3 ; Solved: 70 ; Time: 16h44m22s
 ```
 
-The above is the final result ***run_table3.sh*** finishes, where the complete number of all scales reach to 100. "RegionNum" = #Regions, "MaxRegion" = Max Region Size, and the number of threads for running the mulitcore OS module is fixed to 4. To repeat a single experiment for x times with m operations per thread, delay t milliseconds, run
+The above is the final result when ***run_table3.sh*** finishes with the above 12 scales, 100 runs per scale. "RegionNum" = #Regions, shows the average number of distinct regions in a solved history. "MaxRegion" = Max Region Size, shows the average size of the largest region in a solved history. The number of threads for running the mulitcore OS module is fixed to 4. To repeat a single scale experiment for x times with m operations per thread, delay t milliseconds, run
 ```bash
-    sh run_table3_single.sh x 4 m t
+    ./run_table3_single.sh x 4 m t
 ```
-The (intermediate) result can be shown while show_table3_single.sh is executed repeatedly.
+An intermediate result can be shown with ***show_table3_single.sh***.
 ```bash
-    sh show_table3_single.sh x 4 m t
+    ./show_table3_single.sh x 4 m t
 ```
 ## 3. Automatic mode of VeriLin
 
@@ -248,7 +253,7 @@ The automatic mode of VeriLin is reported in Section 6 in the submitted paper. T
 
 For this experiment only, run
 ```bash
-    sudo sh run_automode.sh
+    ./run_automode.sh
 ```
 
 ```

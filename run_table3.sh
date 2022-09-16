@@ -1,3 +1,3 @@
 cd manualMode/MultiCoreOS
-sh run3.sh 
+./run3.sh 
 cd ../..

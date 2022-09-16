@@ -17,17 +17,17 @@ javac VeriLin.java
 count=0
 while [ $i -le $CTR ]
 do
-  java GenerateHistory $THN $TLN > trace
-  res=`java -Xss1024m -Xmx400g VeriLin trace writetrace $THN`
+  java GenerateHistory $THN $TLN > history
+  res=`java -Xss1024m -Xmx20g VeriLin history failed_history $THN`
   echo "test$i:" >> result
   echo $res >> result
 
-  h=`echo $res | head -n 1`
-  if [ "$h" = "Verification Failed." ]
+  h=`echo $res | head -n 1 | awk '{print $2}'`
+  if [ "$h" = "Failed." ]
   then
-	if [ -f writetrace ] 
+	if [ -f failed_history ] 
 	then
-	  `mv writetrace writetrace$count`
+	  `mv failed_history failed_history$count`
 	fi
 	count=$((count+1))
   fi
