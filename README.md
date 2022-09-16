@@ -23,6 +23,14 @@ Before running the experiment of Figure 4, please download non_docker_env.tgz (i
     tar -xvzf non_docker_env.tgz
     tar -xvzf toolComparison.tgz
 ```
+
+Docker is required for tools comparison experiment. It can be installed with
+```bash
+    sudo apt install docker.io
+```
+in Ubuntu 18.04. 
+
+
 ### 1.1 VeriLin
 
 The result is shown in ***result_Figure4_VeriLin*** by running run_comprison_VeriLin_v1.sh, in the format below.
