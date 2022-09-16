@@ -47,6 +47,7 @@ VeriLin	concurrentdeque	4 * 1000	10/10
 ```
 
 This experiment can be executed with either of the following three settings:
+
 ***once: only 1 time per object***
 ```bash
     sudo sh run_comparison_VeriLin.sh
