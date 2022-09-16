@@ -10,7 +10,7 @@ The all-in-one package for this artifact is available at https://lcs.ios.ac.cn/~
 ### Notes
 
 - The experiments reported in the submitted paper are conducted on an Ubuntu 18.04 machine with 96 cores and 2048G memory. Java SE 11 is used for all these experiments except the tools comparison part, which uses Java SE 14 on an Ubuntu 20.04 machine. 
-- We recommend to run these experiments with at least 16 cores and about 256G memory on an Ubuntu 20.04 machine. With less resources, the results may differ from those reported in the submitted paper. 
+- We recommend to run these experiments with at least 16 cores and about 256G memory using Java SE 11 on an Ubuntu 20.04 machine. With less resources, the results may differ from those reported in the submitted paper. 
 - For all these experiments, concurrent histories are to be generated in a random manner. Thus, the experimental results may vary from time to time. We report the average statistics to reduce possible bias in the following experiments and in the submitted paper. However, we envisage that more tests may demonstrate the performance of our and others' approaches more accurately.
 - Warnings may be reported during executing an experiment, e.g. "warning: Unsafe is internal proprietary API and may be removed in a future release". These warnings concern only about the concurrent object under test, instead of the implementation of VeriLin.
 - The evaluations of Sections 2 and 3 are fully included in this GitHub repository, and do not require the external dependencies. The evaluation of section 1 require docker and other dependencies.
